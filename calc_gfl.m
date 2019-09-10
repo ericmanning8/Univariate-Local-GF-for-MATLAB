@@ -11,7 +11,9 @@ function  gf_l = calc_gfl(gf_l, x1, y1, t_incr, i, points, area)
                 end
 
             end
+        end 
     
         gf_l(i, bin) = sqrt(area * gf_l(i, bin) / (pi * (n - 1))) %Final GF L value for i at bin
 
+    end
 end
