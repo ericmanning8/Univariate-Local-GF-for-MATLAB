@@ -21,3 +21,7 @@ end
 % display the NDF vector 
 disp('GLF vector:');
 disp(gfl(:,1));
+
+%create a contour plot: 
+figure(1);
+contour(x1,y1,gfl);
