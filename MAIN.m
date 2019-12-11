@@ -1,7 +1,9 @@
 %%% Main Script
 
 % load data 
-data;
+fileName = 'fileName'; % Enter file name here 
+data = open(fileName);
+
 x1 = data(:,1);
 y1 = data(:,2);
 st = 10;
@@ -13,7 +15,7 @@ method = ChooseEdgeCorrection();
 
 % perform GFL analysis 
 if (method == 1) % NDF with edge corrections 
-    gfl = calc_gfl_ew(x1, y1, st, max_step, points);
+    gfl = calc_gfl_ew(x1, y1, st, max_step, points, points);
 else % without edge corrections 
     gfl = calc_gfl(x1, y1, st, max_step, points);
 end
@@ -24,4 +26,4 @@ disp(gfl(:,1));
 
 %create a contour plot: 
 figure(1);
-contour(x1,y1,gfl);
+contour(x1, y1, gfl);
