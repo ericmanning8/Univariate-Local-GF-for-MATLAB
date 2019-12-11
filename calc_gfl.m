@@ -1,6 +1,6 @@
 % Estimate GF L(d) assuming NO edge corrections
 
-function  gf_l = calc_gfl(gf_l, x1, y1, t_incr, i, points, area)
+function  gf_l = calc_gfl(gf_l, x1, y1, t_incr, n)
 
     for i = 1:n %Loop through all points
         for j = 1:n

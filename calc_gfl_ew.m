@@ -56,9 +56,9 @@ function gf_l = calc_gfl_ew(x1, y1, t_incr, last_t, n, bin)
         end
 
         if (bin == 1)
-            gf_l(i, bin) = area * (gf_l(i, bin) / (double)((n - 1))); % Final GF L value for i at bin
+            gf_l(i, bin) = area * (gf_l(i, bin) / ((n - 1))); % Final GF L value for i at bin
         else
-            gf_l(i, bin) = gf_l(i, bin - 1) + area * (gf_l(i, bin) / (double)((n - 1)));% Final GF L value for i at bin
+            gf_l(i, bin) = gf_l(i, bin - 1) + area * (gf_l(i, bin) / ((n - 1)));% Final GF L value for i at bin
         end
 
     end
