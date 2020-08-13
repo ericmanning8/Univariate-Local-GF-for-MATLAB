@@ -1,8 +1,8 @@
 %%% Main Script
 
 % load data 
-fileName = 'fileName'; % Enter file name here 
-data = open(fileName);
+fileName = 'FullStackDriftOvercountCorrectedSieved.xlsx'; % Enter file name here 
+data = xlsread(fileName, 'Sheet4');
 
 x1 = data(:,1);
 y1 = data(:,2);
@@ -15,7 +15,7 @@ method = ChooseEdgeCorrection();
 
 % perform GFL analysis 
 if (method == 1) % NDF with edge corrections 
-    gfl = calc_gfl_ew(x1, y1, st, max_step, points, points);
+    gfl = calc_gfl_ew(x1, y1, st, max_step, points, 1);
 else % without edge corrections 
     gfl = calc_gfl(x1, y1, st, max_step, points);
 end
@@ -24,6 +24,6 @@ end
 disp('GLF vector:');
 disp(gfl(:,1));
 
-%create a contour plot: 
+% create a contour plot: 
 figure(1);
-contour(x1, y1, gfl);
+contour(0:size(gfl(:,1)), 0:size(gfl(1,:)), gfl);
