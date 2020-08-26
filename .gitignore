@@ -1,2 +1,6 @@
 gui_edits.m
 MAIN.m~
+.DS_Store
+FullStackDriftOvercountCorrectedSieved.csv
+FullStackDriftOvercountCorrectedSieved.xlsx
+test_main.m~
