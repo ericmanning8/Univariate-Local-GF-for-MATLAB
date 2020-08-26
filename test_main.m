@@ -45,12 +45,13 @@ function test_main()
         if (edge_method == 1)
             calc_gfl(gf_l, x1, y1, t_incr, i, points, area);
         elseif (edge_method == 2)
-            gf_l(:, i) = calc_gfl_ew(x1, y1, t_incr, (t_incr - t), points, area);
+            calc_gfl_ew(gf_l, x1, y1, t_incr, (t_incr - t), points, area);
         end
             
         i = i + 1; 
         t_incr = t_incr + t;
     end
+    close (wb);
 
     % Correct so that L(d) = d under CSR
     for i = 1:points
