@@ -1,29 +1,20 @@
 % Estimate GF L(d) assuming weighted edge corrections -> method given by Goreaud and Pelissier (1998)
 
-function gf_l = calc_gfl_ew(x1, y1, t_incr, last_t, n, bin)
+function calc_gfl_ew(gf_l, x1, y1, t_incr, last_t, n, bin, area)
 
     xmin = min(x1);
     ymin = min(y1);
     xmax = max(x1); 
-    ymax = max(y1);  
-    area = (xmax - xmin) * (ymax - ymin);
-
-    dx = 0;
-    dy = 0;
-    dx2 = 0;
-    dy2 = 0;
-    dij = 0; % dist to boundary buffers.
-    edge_wgt = 0;
+    ymax = max(y1);
+    
+    edge_wgt = 0; 
     method = 0; % Edge correction factor.
-
-    gf_l = zeros(n, n); % perallocate gf_l vector size to all zeros
 
     if (last_t < 0)
         last_t = 0;
     end
 
-    for i = 1:n % Loop through all points
-    
+    for i = 1:n % Loop through all points 
         for j = 1:n
         
             if (((abs(x1(i) - x1(j)) < t_incr) && (abs(y1(i) - y1(j)) < t_incr)))
@@ -60,7 +51,5 @@ function gf_l = calc_gfl_ew(x1, y1, t_incr, last_t, n, bin)
         else
             gf_l(i, bin) = gf_l(i, bin - 1) + area * (gf_l(i, bin) / ((n - 1)));% Final GF L value for i at bin
         end
-
-    end
-    
+    end    
 end
