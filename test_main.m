@@ -13,8 +13,8 @@ function test_main()
     ymin = min(y1);
     xmax = max(x1); 
     ymax = max(y1); 
-    t = 0.1;
-    max_step = 1000;
+    t = 1;
+    max_step = 100;
     interval = true; 
     n_simul = 100;
     limit = 1000000;
@@ -36,6 +36,7 @@ function test_main()
     
     area = (xmax - xmin) * (ymax - ymin);
 
+    tic;
     i = 1;
     wb = waitbar(0, 'Computing Local Clustering Function...');
     while (i <= bins)
@@ -52,14 +53,18 @@ function test_main()
         t_incr = t_incr + t;
     end
     close (wb);
+    toc;
 
     % Correct so that L(d) = d under CSR
+    wb = waitbar(0, 'Performing Corrections...');
     for i = 1:points
     
         for j = 1:bins
-            gf_l(i, j) = Sqr(gf_l(i, j) / pi);
+            waitbar( (i*j + j) / (bins*points), wb);
+            gf_l(i, j) = sqrt(gf_l(i, j) / pi);
         end
     end
+    close (wb);
 
     % Now do the Average and CI calculations for the global statistic ...
     if (n_simul > 0 && interval == true)
@@ -80,6 +85,7 @@ function test_main()
         for rep = 1:n_simul
         
             Initialise2d(buffer_gfl, 0, points, bins);
+            buffer_gfl = zeros(points, bins);
             percentDone = Conversion.Int((rep / n_simul) * 100);
 
             if (bygroups == false)
@@ -98,15 +104,15 @@ function test_main()
                     calc_gfl(buffer_gfl, x_rnd, y_rnd, t_incr, i, points, area);
                 elseif ((edge_method == 2))
                     calc_gfl_ew(buffer_gfl, x_rnd, y_rnd, t_incr, (t_incr - t), points, i, xmin, ymin, xmax, ymax, area);
-
-                i = i + 1; t_incr = t_incr + t;
                 end
+                    
+                i = i + 1; t_incr = t_incr + t;
             end
 
             % Correct so that L(d) = d under CSR
             for i = 1:points
                 for j = 1:bins
-                    buffer_gfl(i, j) = Sqr(buffer_gfl(i, j) / pi);
+                    buffer_gfl(i, j) = sqrt(buffer_gfl(i, j) / pi);
                 end
             end
 
