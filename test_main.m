@@ -14,13 +14,13 @@ function test_main()
     xmax = max(x1); 
     ymax = max(y1); 
     t = 1;
-    max_step = 100;
+    max_step = 25;
     interval = true; 
-    n_simul = 100;
+    n_simul = 0;
     limit = 1000000;
     edge_method = 1;
     testname = "Univariate Getis and Franklin's L";
-    t_incr = 0;
+    t_incr = 10;
     bins = ceil(max_step / t) + 1;
     
     if ((bins * t) > (max_step + t))
@@ -44,27 +44,29 @@ function test_main()
         waitbar(percentDone, wb);
             
         if (edge_method == 1)
-            calc_gfl(gf_l, x1, y1, t_incr, i, points, area);
+            gf_l = calc_gfl(gf_l, x1, y1, t_incr, i, points, area);
         elseif (edge_method == 2)
-            calc_gfl_ew(gf_l, x1, y1, t_incr, (t_incr - t), points, area);
+            gf_l = calc_gfl_ew(gf_l, x1, y1, t_incr, (t_incr - t), points, area);
         end
             
         i = i + 1; 
         t_incr = t_incr + t;
     end
     close (wb);
-    toc;
 
     % Correct so that L(d) = d under CSR
     wb = waitbar(0, 'Performing Corrections...');
     for i = 1:points
-    
+        waitbar(i / points, wb);
+        
         for j = 1:bins
-            waitbar( (i*j + j) / (bins*points), wb);
             gf_l(i, j) = sqrt(gf_l(i, j) / pi);
         end
     end
     close (wb);
+    toc;
+    
+    contourf(gf_l);
 
     % Now do the Average and CI calculations for the global statistic ...
     if (n_simul > 0 && interval == true)

@@ -1,6 +1,6 @@
 % Estimate GF L(d) assuming weighted edge corrections -> method given by Goreaud and Pelissier (1998)
 
-function calc_gfl_ew(gf_l, x1, y1, t_incr, last_t, n, bin, area)
+function gf_l = calc_gfl_ew(gf_l, x1, y1, t_incr, last_t, n, bin, area)
     xmin = min(x1);
     ymin = min(y1);
     xmax = max(x1); 
